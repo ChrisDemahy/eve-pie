@@ -186,18 +186,18 @@ def callback():
     # if the user is already authed, we log him out
     if current_user.is_authenticated:
         logout_user()
-
+    # TODO fix this below ,changed to work through table not existing. Will fix with new ide
     # now we check in database, if the user exists
     # actually we'd have to also check with character_owner_hash, to be
     # sure the owner is still the same, but that's an example only...
-    try:
-        user = User.query.filter(
-            User.character_id == cdata['sub'].split(':')[2],
-        ).one()
+    # try:
+    #     user = User.query.filter(
+    #         User.character_id == cdata['sub'].split(':')[2],
+    #     ).one()
 
-    except NoResultFound:
-        user = User()
-        user.character_id = cdata['sub'].split(':')[2]
+    # except NoResultFound:
+    user = User()
+    user.character_id = cdata['sub'].split(':')[2]
 
     user.character_owner_hash = cdata['owner']
     user.character_name = cdata['name']
@@ -243,4 +243,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(port=config.PORT, host=config.HOST)
+    app.run(port=config.PORT, host=config.HOST, ssl_context='adhoc')
