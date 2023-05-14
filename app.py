@@ -182,7 +182,7 @@ def callback():
 
     # we get the character informations
     cdata = esisecurity.verify()
-
+    print(cdata)
     # if the user is already authed, we log him out
     if current_user.is_authenticated:
         logout_user()
@@ -212,7 +212,7 @@ def callback():
         session.permanent = True
 
     except:
-        logger.exception("Cannot login the user - uid: %d" % user.character_id)
+        logger.exception("Cannot login the user - uid: %d" % int(user.character_id))
         db.session.rollback()
         logout_user()
 
